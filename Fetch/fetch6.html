@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Fetch API 활용 -PUT 메서드 (Create)</h1>
+    <div id="findFrm">
+        수정할 회원의 ID:
+        <input type="text" name="id" id="id">
+        <button onclick="find()">정보 조회</button>
+    </div>
+
+    <div id="divFrm" style="display: none">
+        <form name="frm" action="join.jsp">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name">
+            <br>
+            <label for="job">Job</label>
+            <input type="text" name="job" id="job">
+            <br>
+            <button type="submit" onclick="updateUser()">수정</button>
+            <button type="reset">다시쓰기</button>
+        </form>
+    </div>
+
+    <hr>
+    <div id="result"></div>
+    <script src="fetch6.js"></script>
+
+
+</body>
+
+</html>

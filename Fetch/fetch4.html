@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch4.html</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        #result{
+            padding: 2em;
+            width:80%;
+            margin: auto;
+            /* border: 1px solid red; */
+            text-align: center;
+        }
+        #result .table{
+            width:90%;
+            margin:auto;
+            border-collapse: collapse;
+            
+        }
+    </style>
+</head>
+<body onload="getAllUser(1,10)">
+    <h1>Fetch API 활용 4</h1>
+    <!-- 페이지, 인원 수 -->
+    <button id="btn1" onclick="getAllUser(1, 10)">모든 User 정보 가져오기-reqres.in</button>
+    <hr>
+    <div id="result"></div>
+    <div id="paging"></div>
+    <script src="fetch4.js"></script>
+</body>
+</html>
