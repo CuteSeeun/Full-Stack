@@ -1,0 +1,62 @@
+@charset "utf-8";
+
+body {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #d1d1d1;
+}
+
+h1 {
+    color: #333
+}
+
+button {
+    padding: 10px 20px;
+    /*상하10, 좌우20, 안쪽 여백 */
+    background-color: blanchedalmond;
+    border: none;
+    border-radius: 5px;
+    margin: 5px 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(241, 193, 120);
+
+}
+
+#newsContainer {
+    width: 80;
+    max-width: 600px;
+    /* border:1px solid red; */
+    margin: 20px auto;
+    text-align: left;
+}
+
+#newsContainer li {
+    list-style-type: none;
+    background-color: aliceblue;
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 4px solid salmon;
+    box-shadow: 0 2px 4px rgb(241, 193, 120);
+    transition: background-color 0.3s;
+    /* 배경색 속성이 변경될 때 그 변화가 0.3초 동안 부드럽게 애니메이션 */
+    margin-bottom: 10px;
+    /*여기서 px를 안쓰면 안먹힘*/
+}
+
+#newsContainer li:hover {
+    background-color: #f0f0f0;
+}
+
+#newsContainer li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+#newsContainer li a:hover {
+    color: rgb(207, 129, 12);
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0"  encoding="UTF-8" ?>
+<items>
+    <note no="1">
+        <to>Tom</to>
+        <from>Peter</from>
+        <heading>Reminder</heading>
+        <body>Don't forget me</body>
+    </note>
+    <note no="2">
+        <to>영희</to>
+        <from>철수</from>
+        <heading>안부인사</heading>
+        <body>잘 지내시나요?</body>
+    </note>
+</items>

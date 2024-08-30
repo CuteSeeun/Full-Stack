@@ -5,7 +5,6 @@ const find = () => {
     const divFrm = document.querySelector('divFrm'); // div => display: none
 
     if (!idVal) {
-
         alert('id를 입력하세요');
         document.querySelector('#id').focus();
         return;
@@ -23,15 +22,16 @@ const find = () => {
 const getUserInfo = async (id) => {
     let url = `https://reqres.in/api/users/${id}`;
 
+    //여기서 async, await 대신 fetch랑 .then을 쓸 수 있다.
     try {
         const response = await fetch(url)
         const data = await response.json()
         // alert(data)
-        if(!data.data){
+        if (!data.data) {
             alert(`${id}번 회원은 없습니다`)
             return;
         }
-        const {id:userId, first_name, last_name} = data.data
+        const { id: userId, first_name, last_name } = data.data
         frm.name.value = first_name + " " + last_name;
         divFrm.style.display = 'block'
     } catch (err) {
@@ -40,8 +40,9 @@ const getUserInfo = async (id) => {
 }
 
 //수정 처리하는 메서드
-const updateUser = async ()=>{
-    try{
+const updateUser = async () => {
+    event.preventDefault();
+    try {
         //수정할 회원의 id값 받기
         const idVal = document.querySelector('#id'.value);
 
@@ -53,9 +54,9 @@ const updateUser = async ()=>{
         }
 
         //유효성 체크 (옵션)
-        if(!data.job){
+        if (!data.job) {
             alert('직업란에 수정할 값을 입력하세요');
-            frm.job.focus(); 
+            frm.job.focus();
             return;
         }
 
@@ -65,36 +66,47 @@ const updateUser = async ()=>{
         //응답 데이터를 받아서
         //id가 result인 곳에 출력하기(name, job, updateAt)
 
-    } catch(error){
+    } catch (error) {
         alert('Error: ' + error);
     }
 }
 
-async function updatePut(data) {
-    const url = `https://reqres.in/api/users/${data.id}`;
-    try{
+const updatePut = async (data) => {
+    try {
+        let url = `https://reqres.in/api/users/${data.id}`;
+        console.log(url);
+
         const response = await fetch(url, {
-            method : 'PUT',
-            headers: { 
-                'Content-Type' : 'application/json'
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            body : JSON.stringify(data)
-        }) 
-        //응답 데이터 받기
-        const responseData = await response.json()
-        const {name, job, id, updateAt} = responseData;
-        const result = document.querySelector('#result');
+            body: JSON.stringify(data)
+        })
+        const responseData = await response.json();
+        const { name, job, updatedAt } = responseData;
+        const result = document.getElementById('result')
         result.innerHTML = `
-            <h2>수정된 회원 정보</h2>
-            <h3>ID: ${id}</h3>
-            <h3>Name: ${name}</h3>
-            <h3>Job: ${job}</h3>
-            <h3>createAt: ${updateAt}</h3>
+            <h2>수정된 회원정보</h2>
+            <h3>Id: ${data.id} </h3>
+            <h3>name: ${name}</h3>
+            <h3>job: ${job}</h3>
+            <h3>updatedAt: ${updatedAt}</h3>
         `
+
+        //이는 수정 버튼 누르고 폼의 텍스트가 초기화된다
+        frm.name.value = ''; //입력 폼의 input 값 비우기
+        frm.job.value = ''; 
+        document.querySelector('#id').value = '';
+        //밑에서 감추기 하는데 왜 위 코드를 작성하는가?
+        /* 뭐 어디에서 다 보인다고 하더라. 그리고
+           사용자 정보 입력하고 정보 초기화해주는게 맞다고 한다.
+        */ 
+
         const divFrm = document.getElementById('divFrm')
-        divFrm.style.display = 'none';
-        
-    }catch(error){
-        alert(error);
+        divFrm.style.display = 'none';//감추기
+
+    } catch (error) {
+        alert('error: ' + error)
     }
 }

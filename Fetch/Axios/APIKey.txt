@@ -1,0 +1,3 @@
+58fabe5c7b978a03de22bb490adfe39a
+
+https://api.openweathermap.org/data/2.8/
