@@ -74,6 +74,8 @@ const fetchWeather = async(lat, long) =>{
     //weatherAlter에 출력해보기 
 
     /* 내가 한거
+    const data = response.data; <- 이거 안써줘서 에러 난듯?
+
     const timezone = response.data; //data.timezone
     const temp = (response.data.current - 273.15).toFixed(1); //data.current.temp
     const description = response.data.current.weather[0].description;//data.current.weather[0].
