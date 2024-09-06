@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router(); 
 //express.Router() ==> 독립적인 라우터
 //미니 앱
 
@@ -95,3 +95,6 @@ router.put('/:isbn', (req, res)=>{
 
 
 module.exports = router;
+//exports 라는 전역 객체 이용하거나
+//module.exports 로 이용해 내보낼 수 있다. 
+//exports.add = function(){} 이렇게 하면 여러 개 내보낼 수 있다
