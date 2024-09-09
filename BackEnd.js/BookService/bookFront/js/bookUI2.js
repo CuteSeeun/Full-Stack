@@ -1,4 +1,4 @@
-import {getAllBooks, addBook, getBook, findBook, deleteBook, updateBook} from './bookAPI2.js'
+import {getAllBooks, addBook, getBook, findBook, deleteBook, updateBook, addBookFileUp} from './bookAPI2.js'
 
 const init = () => {
     const btnAll = document.querySelector('#btnAll');
@@ -13,12 +13,30 @@ const init = () => {
         const title = document.getElementById('title').value;
         const publish = document.getElementById('publish').value;
         const price = document.getElementById('price').value;
+        //도서 이미지 첨부파일값 받기
+        const image = document.getElementById('image').files[0]; //files[0]로 받음
+
         if (!title || !publish || !price) {
             alert('모든 값을 입력해야 한다')
             return;
         }
-        const book = { title, publish, price };
-        addBook(book);
+        //파일 업로드 안할 경우 -> json 데이터로 보낸다
+        // const book = { title, publish, price };
+        // addBook(book);
+
+        //파일 업로드를 할 경우 -> FormData에 담아서 보낸다
+        let formData = new FormData();
+        formData.append('title', title);
+        formData.append('publish', publish);
+        formData.append('price', price);
+        if(image){
+            //첨부 파일이 있다면
+            formData.append('image', image);
+        }
+        //로그로 폼데이터 확인
+        console.log(Array.from(formData.entries()));
+        
+        addBookFileUp(formData); //업로드할 경우 호출
     }
 
 

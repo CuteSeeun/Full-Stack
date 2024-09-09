@@ -1,6 +1,14 @@
 const baseUrl = `http://localhost:7777`;
 const url = baseUrl + '/api/books';
 
+//에러 처리 함수
+const showError = (error)=>{
+    let msg = document.getElementById('resultMessage');
+    msg.innerHTML = `<h3>${error}</h3>`;
+    msg.style.display = 'block';
+}
+
+
 const findBook = async (keyword) => {
     // alert(keyword);
     const url2 = url+`/search?keyword=${keyword}`;//url 만듦
@@ -23,7 +31,7 @@ const findBook = async (keyword) => {
 
         renderBooks(data);
     } catch (error) {
-        alert(error)
+        showError(error)
     }
 
 }
@@ -47,8 +55,27 @@ const addBook = async (newBook) => {
     } catch (error) {
         console.error('Error ', error);
         alert(error)
+
+        showError(error)
     }
 }
+
+const addBookFileUp = async (formData)=>{
+    try{
+        const response = await fetch(url, {
+            method:'post', 
+            body:formData //바디 부분에 폼데이터를 전달하면 된다
+        })
+        //FormData 객체를 사용하면 브라우저가 자동으로 Content-Type 헤더를 설정하면서 적절한 boundary를 추가한다
+        // => multipart/form-data 형식으로 알아서 전송
+        const data = await response.json();
+        getAllBook();
+        clearInput();
+    }catch(error){
+        showError(error);
+    }
+}
+
 
 const clearInput = () => {
     document.getElementById('isbn').value = '';
@@ -69,7 +96,7 @@ const getAllBooks = async () => {
         renderBooks(data);
 
     } catch (error) {
-        alert('Error: ' + error)
+        showError(error)
     }
 }
 
@@ -109,7 +136,7 @@ const getBook = async (isbn) => {
 
 const setFormData = (book) => {
     if (!book) {
-        alert('해당 도서는 업스므니다');
+        alert('해당 도서가 없음');
         return;
     }
     document.getElementById('isbn').value = book.isbn;
@@ -119,9 +146,9 @@ const setFormData = (book) => {
     //도서 이미지 
     let str = ``;
     if (book.image) { //이미지가 있을 때
-        str += `<img src="images/${book.image}" alt="${book.title}" class="img-thumbnail">`;
+        str += `<img src="http://localhost:7777/images/${book.image}" alt="${book.title}" class="img-thumbnail">`;//서버의 url을 보여줌
     } else {//없을 경우
-        str += `<img src = "images/noimage.jpg" alt="Noimage" class="img-thumbnail">`;
+        str += `<img src = "images/noimage.jpg" alt="Noimage" class="img-thumbnail">`; //프론드엔드 서버꺼를 보여줌
     }
     //id="bookImage"인 곳에 넣자
     document.getElementById('bookImage').innerHTML = str;
@@ -147,15 +174,16 @@ const deleteBook = async (isbn) => {
         alert(JSON.stringify(data));
         getAllBooks(); //모든 도서 가져오기
     } catch (error) {
-        alert(error);
+        showError(error);
         console.log(error);
     }
 
 }
 
 //PUT으로 업데이트 하기
-const updateBook = async (newBook) => {
-    const url2 = url + `/${newBook.isbn}`;
+const updateBook = async (newBook) => { 
+    //fetch로 도서 정보 업데이트하고 그에 따른 응답 처리.
+    const url2 = url + `/${newBook.isbn}`; //newBook.isbn을 사용해 특정 도서의 정보를 업데이트할 url을 생성
     try {
         //fetch()
         const response = await fetch(url2, { //응답이 안왔는데 밑에서 제이슨을 불러서 response.json()이 펑션이 아니라고 오류가 떴다
@@ -168,15 +196,20 @@ const updateBook = async (newBook) => {
         //응답이 잘 오면 모든 도서 정보 가져오기
         const data = await response.json();
         console.log(data);
-        if (data) {
+        if (data.message === 'success') {
             getAllBooks();
-            clearInput();
+            clearInput(); //호출해서 초기화
             document.getElementById('btnUpdate').setAttribute("disabled", "disabled")
             //수정버튼 활성화
+            document.getElementById('resultMessage').style.display = 'none';
+        }else{
+            document.getElementById('resultMessage').innerHTML = `<h3>${data.message}</h3>`
+            document.getElementById('resultMessage').style.display = 'block';
         }
     } catch (error) {
-        alert(error);
+        showError(error);
     }
 }
 
-export {getAllBooks, addBook, getBook, findBook, deleteBook, updateBook};
+export {getAllBooks, addBook, getBook, findBook, deleteBook, updateBook, addBookFileUp};
+//파일 업로드 하기전에는 addBook을 썼고 업로드 후에는 addBookFileup을 쓴다

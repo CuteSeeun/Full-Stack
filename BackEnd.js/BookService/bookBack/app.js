@@ -18,6 +18,10 @@ const naverRouter = require('./routes/naverRouter')
 
 const indexRouter = require('./routes/indexRouter')
 const bookDBRouter = require('./routes/bookDBRouter')
+const testRouter = require('./routes/testRouter')
+
+
+
 
 
 const port = process.env.PORT || 3333;
@@ -36,6 +40,7 @@ app.use('/books', bookRouter) //배열 사용
 app.use('/api/books', bookDBRouter) //db연동
 app.use('/users', userRouter)
 app.use('/naver', naverRouter)
+app.use('/test', testRouter)
 //라우터를 미들웨어로 설정함
 
 //cors 관련 설정 미들웨어 _ npm i cors --s 설치

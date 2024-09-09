@@ -45,7 +45,7 @@
                             <td style="width: 20%">서명</td>
                             <td style="width: 20%">출판사</td>
                             <td style="width: 20%">가격</td>
-                            <td style="width: 20%">출판일</td>
+                            <td style="width: 20%">ISBN</td>
                             <td style="width: 20%">편집</td>
                         </tr>
                     </thead>
@@ -84,6 +84,14 @@
                                     <input type="text" name="price" id="price" class="form-control" />
                                 </td>
                             </tr>
+
+                            <tr>
+                                <td>도서 이미지</td>
+                                <td>
+                                    <input type="file" name="image" id="image" class="form-control" />
+                                </td>
+                            </tr>
+
                             <tr>
                                 <td colspan="2" class="text-center">
                                     <button type="button" id="btnCreate" class="btn btn-success">도서등록</button>
@@ -99,6 +107,12 @@
                 <!--.col-->
             </div>
         </div>
+
+        <!-- 서버로부터 받은 응답 메세지 출력할 곳 -->
+        <div class="alert alert-danger" id="resultMessage" style="display:none">
+
+        </div>
+        
     </body>
     <script src="js/bookUI2.js" type="module"></script>
 </html>
